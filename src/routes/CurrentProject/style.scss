@@ -1,0 +1,41 @@
+@import '../../styles/variables';
+@import '../../styles/functions';
+@import '../../styles/mixins';
+
+.project {
+
+  &__info {
+    display: flex;
+  }
+
+  &__image {
+    position: relative;
+    overflow: hidden;
+    border-radius: radius('sm');
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    @include size(300px);
+
+    img {
+      @include fill-img;
+    }
+  }
+
+  &__tabs {
+    display: flex;
+    padding-bottom: 20px;
+    margin-top: 30px;
+    border-bottom: 1px solid lightgray;
+
+    & > *:not(:first-child) {
+      margin-left: 25px;
+    }
+  }
+
+  &__tab {
+    @include button;
+  }
+
+  &__content {
+    margin-top: 20px;
+  }
+}

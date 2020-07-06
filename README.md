@@ -1,44 +1,48 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Front-End Test
 
-## Available Scripts
+## Описание задачи
+Вы участвуете в разработке Web портала для команды LiveOps, с помощью которого команда оперирует несколькими игровыми проектами. От команды LiveOps поступил запрос на функционал массового апдейта игроков: добавление игровых предметов, замена одних предметов на другие, автоматические завершение определенных квестов с выдачей награды и т.п. После обсуждения функционала вместе с инженерами бэкенда появились следующие детали:
 
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+* С точки зрения Web портала, функционал будет реализован отдельной секцией Mass Tasks, не связанной с другими частями портала
+* Каждый игровой проект будет иметь свои собственные типовые массовые задачи. Оператор портала (команда LiveOps) будет запускать задачу только в рамках какого-то одного проекта.
+* В рамках конкретного игрового проекта команда бэкенда будет создавать свои уникальные типовые задачи. Описание каждой задачи будет состоять из следующих полей: 
+   * TaskType - уникальное тип задачи, например ("AddItem")
+   * Desc - краткое описание задачи, например ("Adds an item specified in parameters to the player's inventory")
+* На Web портале в секции Mass Tasks будет отображаться список возможных задач для каждого из игрового проекта
+* На Web портале будет возможность запустить новую задачу, указав тип задачи и необходимые параметры для запуска задачи. Параметры задачи будут зависеть от типа задачи и описываться командой LiveOps в виде JSON объекта.
+* Бэкенд команда предоставит API: 
+   * получение списка проектов 
+   * для конкретного проекта, получение списка возможных задач
+   * запуск задачи для конкретного проекта, необходимо передать тип задачи и ее параметры, в качестве результата возвращается UID задачи
+   * получение статуса задачи по UID эксземпляра задачи со следующими полями
+     * State - состояние задачи, одно из "InProgress", "Done", "Failed"
+	  * Progress - прогресс в процентах, имеет смысл только для состояния "InProgress"
+* Пример типовой задачи:
+   * описание задачи:
+```
+{
+	"TaskType": "AddItem",
+	"Desc": "Adds an item specified in parameters to the player's inventory"
+}
+```
+   * аргументы для запуска задачи с параметром
+```
+{
+	"TaskType": "AddItem",
+	"Parameters": {
+		"ItemName": "gold",
+		"Count": 100
+	}
+}
+```
+   
+## Постановка задачи
+1. Спроектировать интерфейс для оператора из команды LiveOps для запуска и мониторинга массового апдейта игроков. 
+Какова будет принципиальная схема построения UI? Какие можно сформулировать функциональные требования для Front-End?
+Какие аспекты при использовании новой секции портала могли быть не учтены в описании задачи?
+2. Сформулировать REST API бэкенда, необходимый для полной реализации секции.
+Какие функции изменить/добавить для старта задачи? Что потребуется для реализации мониторинга задач.
+3. Реализовать часть функционала: отображение списка проектов и списка задач в каждом проекте:
+* Использовать React не ниже 16.8
+* Не использовать Redux и подобные state менеджеры
+* Дополнительным плюсом будет использование TypeScript, react hooks и функциональных компонент

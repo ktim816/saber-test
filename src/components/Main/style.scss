@@ -1,0 +1,8 @@
+@import '../../styles/variables';
+
+.main {
+  position: relative;
+  padding: 30px;
+  margin-top: $header-height;
+  margin-left: $sidebar-width;
+}

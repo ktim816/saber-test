@@ -1,0 +1,90 @@
+@import '../../styles/variables';
+@import '../../styles/functions';
+@import '../../styles/mixins';
+
+$offset: 10px;
+
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.tasks {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: -$offset;
+  margin-left: -$offset;
+
+  $this: &;
+
+  &__progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 6px;
+    background-color: color('primary');
+    animation: progress 2000ms ease;
+  }
+
+  &__form {
+    margin-top: 20px;
+
+    label {
+      display: block;
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    select,
+    input {
+      padding: 6px;
+      font-size: 18px;
+      width: 100%;
+    }
+
+    button {
+      @include button(true);
+      margin-top: 20px;
+      display: block;
+      min-width: 100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  &__block {
+    position: relative;
+    width: 200px;
+    margin-top: $offset;
+    margin-left: $offset;
+    margin-right: $offset;
+    border-radius: radius('sm');
+    background-color: lightgray;
+    color: gray;
+    text-align: center;
+
+    &:hover {
+      background-color: color('primary');
+      color: color('light');
+
+      #{$this}__title {
+        border-color: color('light');
+      }
+    }
+  }
+
+  &__title {
+    padding: 8px 16px;
+    font-size: 18px;
+    border-bottom: 1px solid gray;
+  }
+
+  &__description {
+    padding: 8px 16px 16px;
+    font-size: 16px;
+  }
+}

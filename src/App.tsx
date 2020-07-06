@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-function App() {
+import {
+  Header,
+  Main,
+  Sidebar,
+} from '@/components';
+
+import {
+  Projects,
+  CurrentProject,
+} from '@/routes';
+
+import {
+  SIDEBAR_LIST,
+} from '@/constants';
+
+export default () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Sidebar items={SIDEBAR_LIST} />
+      <Main>
+        <Switch>
+          <Route exact path="/projects" component={Projects} />
+          <Route path="/projects/:id" component={CurrentProject} />
+        </Switch>
+      </Main>
+    </BrowserRouter>
   );
-}
-
-export default App;
+};
